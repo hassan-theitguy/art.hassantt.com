@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ART - Hassan Voyeau</title>
+    <meta name="author" content="Hassan Voyeau">
+    <meta name="description" content="My Digital ART Portfolio">
+    <meta name="keywords" content="">
+
+    <link rel="stylesheet" href="css/siimple.min.css">
+    <link rel="stylesheet" href="css/lity.css">
+
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/lity.min.js"></script>
+
+    <style>
+        #container {
+            margin: 0px;
+            display: grid;
+            grid-template-columns: 150px auto;
+            grid-template-rows: auto;
+        }
+
+        #content {
+            text-align: left;
+            padding: 0px 0px 0px 10px;
+        }
+
+        #menu {
+            border-right: 3px solid #F79F1F;
+        }
+
+        .menu-l {
+            display: inline-block;
+            font-size: 30px;
+            font-weight: bold;
+            width: 25px;
+            padding: 0px 7px 0px 7px;
+            margin: 0px 0px 5px 0px;
+            color: #FFFFFF;
+        }
+
+        .menu--a {
+            background-color: #34ace0;
+        }
+
+        .menu-h1--a {
+            color: #34ace0;
+        }
+
+        .menu--r {
+            background-color: #ff5252;
+        }
+
+        .menu-h1--r {
+            color: #ff5252;
+        }
+
+        .menu--t {
+            background-color: #78e08f;
+        }
+
+        .menu-h1--t {
+            color: #78e08f;
+        }
+
+        .menu-r {
+            display: inline;
+        }
+
+        .image {
+            width: 150px;
+            display: block;
+            padding: 0px;
+        }
+
+        .image-cell {
+            width: 160px;
+            padding: 5px;
+        }
+
+        #recent,
+        #about,
+        #talk {
+            display: none;
+        }
+
+        .siimple-table-cell {
+            border: 0px;
+        }
+
+        .lity-container {
+            max-width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="menu">
+            <div class="menu-item" id="menu-about">
+                <div class="menu-l menu--a">A</div>
+                <div class="menu-r">bout</div>
+            </div>
+            <div class="menu-item" id="menu-recent">
+                <div class="menu-l menu--r">R</div>
+                <div class="menu-r">ecent</div>
+            </div>
+            <div class="menu-item" id="menu-talk">
+                <div class="menu-l menu--t">T</div>
+                <div class="menu-r">alk to me</div>
+            </div>
+        </div>
+        <div id="content">
+            <div id="about" class="content-item">
+                <h1 class="menu-h1--a">ABOUT</h1>
+                Experiments in colours and shapes.<br />
+                My name is <b>Hassan Voyeau.</b><br />
+                I am an IT Consultant and Web Developer<br />
+                ART is my hobby.<br />
+                ART is imagination.<br />
+                ART is movement.<br />
+                ART is what you want it to be.<br />
+            </div>
+            <div id="recent" class="content-item">
+                <h1 class="menu-h1--r">RECENT</h1>
+                <div class="siimple-table" id="table">
+                </div>
+            </div>
+            <div id="talk" class="content-item">
+                <h1 class="menu-h1--t">TALK TO ME</h1>
+                Send requests and feedback to art@hassantt.com
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#table").append("<div class='siimple-table-body'>");
+
+            $.getJSON("data.json", function (data) {
+                $.each(data, function (key, val) {
+                    $("#table").append("<div class='siimple-table-row'>");
+                    $("#table").append("<div class='siimple-table-cell image-cell'><img class='image' src='images/thumbs/" + val.image_file + "' /></div>");
+                    $("#table").append("<div class='siimple-table-cell'>" + val.image_file.replace(".png", "") + "</div>");
+                    $("#table").append("</div>");
+                });
+            });
+
+            $("#table").append("</div>");
+
+            $("#table").on('click', '.image', function () {
+                lity($(this).attr("src").replace("images/thumbs", "images"));
+                $("#lity-content").children("img").width(100);
+            });
+
+            $(".menu-item").click(function () {
+                $(".content-item").hide();
+                $(".menu-r").hide();
+                $("#container").css("grid-template-columns", "50px auto");
+                $("#" + $(this).attr("id").replace("menu-", "")).show();
+            });
+        });
+    </script>
+</body>
+
+</html>
